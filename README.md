@@ -1,5 +1,7 @@
-# Awesome-Conditional-Generation
-## Conditional Generation in AI: History, Progression, Variants, & Applications
+![Banner](assets/banner.svg)
+
+# 🚀 Awesome-Conditional-Generation 🌟
+## 🧠 Conditional Generation in AI: History, Progression, Variants, & Applications
 
 **Conditional Generation** is a foundational deep learning paradigm where a generative model synthesizes novel data samples (such as images, text, audio, or molecular structures) guided by explicit auxiliary information ($c$, the **Conditioning Signal**). In standard, unconditioned generation, a model samples randomly from an unguided latent distribution ($P(x)$), outputting realistic but arbitrary variants from the global data manifold (e.g., generating an unprompted face or a generic text paragraph). 
 
@@ -7,7 +9,7 @@ Conditional generation restructures the generation loop to model a conditional p
 
 ---
 
-## 1. The Macro Chronological Evolution
+## 🕰️ 1. The Macro Chronological Evolution
 
 The technical framework governing guided data synthesis has transitioned from rigid categorical class injections to text-conditioned joint-embedding alignments, structural spatial adapters, and unified multi-modal autoregressive sequence patches.
 
@@ -28,7 +30,7 @@ flowchart LR
 
 ---
 
-## 2. Core Functional & Conditioning Variants
+## ⚙️ 2. Core Functional & Conditioning Variants
 
 Conditional Generation models are strictly categorized based on the architectural mechanism deployed to pass the guiding signal into the hidden representation layers.
 
@@ -41,7 +43,7 @@ Conditional Generation models are strictly categorized based on the architectura
 
 ---
 
-## 3. The Multi-Modal Conditioning Interaction Matrix
+## 🔗 3. The Multi-Modal Conditioning Interaction Matrix
 
 To steer data generation safely through multi-layered networks, enterprise orchestration systems layer spatial structural adapters alongside global textual embeddings concurrently.
 
@@ -68,7 +70,7 @@ F --> G
 
 ---
 
-## 4. Production Engineering Challenges & Hardening Mitigations
+## 🚧 4. Production Engineering Challenges & Hardening Mitigations
 
 Deploying and scaling complex conditional generation loops across massive commercial cloud infrastructures introduces unique memory bus and computational bottlenecks.
 
@@ -79,7 +81,7 @@ Deploying and scaling complex conditional generation loops across massive commer
 
 ---
 
-## 5. Frontier Real-World AI Industrial Applications
+## 🌍 5. Frontier Real-World AI Industrial Applications
 
 | Application | Details | Year | Paper |
 | :--- | :--- | :--- | :--- |
