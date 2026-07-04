@@ -12,7 +12,11 @@ Conditional generation restructures the generation loop to model a conditional p
 The technical framework governing guided data synthesis has transitioned from rigid categorical class injections to text-conditioned joint-embedding alignments, structural spatial adapters, and unified multi-modal autoregressive sequence patches.
 
 ```mermaid
-[Conditional GANs (cGAN, 2014)] ───> [Cross-Attention LDMs (CLIP, 2022)] ───> [Spatial Structural Adapters (ControlNet)] ───> [Unified Omni Autoregressive (2025+)](Rigid Class One-Hot Matrix Maps)       (Latent Space Text-Guided Diffusion)          (Fine-Grained Geometric Control Layers)         (Omnidirectional Token Patch Matrices)
+flowchart LR
+    A["Conditional GANs (cGAN, 2014)<br/>(Class-Conditioned Image Generation)"]
+    --> B["Cross-Attention Latent Diffusion (2022)<br/>(Text-Guided Latent Diffusion)"]
+    --> C["Spatial Structural Adapters (ControlNet, 2023)<br/>(Fine-Grained Spatial Conditioning)"]
+    --> D["Unified Multimodal Autoregressive Models (2025+)<br/>(Unified Vision–Language Token Modeling)"]
 ```
 
 *   **The Categorical One-Hot Injection Era (Conditional GANs, ~2014–2017)**
@@ -55,7 +59,18 @@ To steer data generation safely through multi-layered networks, enterprise orche
 
 
 ```mermaid
-Multi-Modal Structural Conditioning Graph[Spatial Canny Edge Map] ───> [ControlNet Adapter Layer] ───> [Local Spatial Bias Vectors] ──┐├──> [Fused Denoising Transformer (DiT Core)][Natural Language Prompt] ──> [Text Encoder (T5/CLIP)] ───> [Global Cross-Attention Keys] ──┘
+flowchart LR
+
+A["Spatial Canny Edge Map"]
+--> B["ControlNet Adapter"]
+--> C["Local Spatial Conditioning"]
+
+D["Natural Language Prompt"]
+--> E["Text Encoder<br/>(T5 / CLIP)"]
+--> F["Global Text Conditioning"]
+
+C --> G["Diffusion Transformer (DiT)<br/>or U-Net Denoiser"]
+F --> G
 ```
 
 *   **ControlNet Adapter Channels**
