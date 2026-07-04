@@ -1,6 +1,14 @@
 ![Banner](assets/banner.svg)
 
 # 🚀 Awesome-Conditional-Generation 🌟
+
+<p align="center">
+  A curated list of awesome conditional generation frameworks, papers, models, and tools.
+</p>
+<p align="center">
+
+<a href="https://github.com/ishandutta2007/Awesome-Awesome-Awesome"><img src="https://img.shields.io/badge/Awesome-%E2%9C%94-blueviolet?style=flat-square&logo=github" alt="Awesome"/></a><a href="https://discord.gg/jc4xtF58Ve"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord" /></a>
+</p>
 ## 🧠 Conditional Generation in AI: History, Progression, Variants, & Applications
 
 **Conditional Generation** is a foundational deep learning paradigm where a generative model synthesizes novel data samples (such as images, text, audio, or molecular structures) guided by explicit auxiliary information ($c$, the **Conditioning Signal**). In standard, unconditioned generation, a model samples randomly from an unguided latent distribution ($P(x)$), outputting realistic but arbitrary variants from the global data manifold (e.g., generating an unprompted face or a generic text paragraph). 
