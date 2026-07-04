@@ -19,17 +19,12 @@ flowchart LR
     --> D["Unified Multimodal Autoregressive Models (2025+)<br/>(Unified Vision–Language Token Modeling)"]
 ```
 
-*   **The Categorical One-Hot Injection Era (Conditional GANs, ~2014–2017)**
-    *   *Concept:* The theoretical genesis popularized by Mirza and Osindero. Early **Conditional Generative Adversarial Networks (cGANs)** injected conditioning constraints into the generator and discriminator graphs by concatenating a discrete, hand-crafted **One-Hot Encoded Class Label Vector** directly onto the input noise arrays.
-    *   *Limitation:* Extremely narrow and discrete. The model could only generate objects belonging to a pre-defined list of fixed indices (e.g., prompting exactly for `Class 3: Dog` or `Class 7: Car`), completely failing to process abstract natural language sentences or complex multi-axis spatial rules.
-*   **The Latent Space Text-Conditioned Era (Stable Diffusion, ~2022–2024)**
-    *   *Concept:* Spurred by the rise of **Contrastive Language-Image Pre-training (CLIP)** backbones paired with **Latent Diffusion Models (LDMs)** [INDEX: 10]. It replaced rigid label vectors with continuous natural language embedding arrays. Text encoders project a user's free-form prompt command into dense multi-dimensional continuous vectors, which are dynamically injected into the denoising backbone layers using **Cross-Attention Mechanisms** [INDEX: 10].
-    *   *Significance:* Unlocked open-vocabulary text-to-image and text-to-video foundation scaling, mapping arbitrary linguistic concepts to precise pixel distributions [INDEX: 10].
-*   **The Fine-Grained Spatial Structural Adapter Era (~2023–2025)**
-    *   *Concept:* Addressed the structural ambiguity of natural language text prompts. While a text command can describe a scene, it cannot specify exact pixel boundaries or human postures efficiently. This era introduced **ControlNet** and **IP-Adapter**, which clone a base network's convolutional blocks to feed extra spatial conditioning layers—such as Canny edge maps, depth contours, or OpenPose skeletons—natively into frozen generative backbones.
-*   **The Unified Omni Autoregressive Token Era (~2025–Present)**
-    *   *Concept:* The current modern state-of-the-art foundation standard. It completely collapses separate conditional projection heads, framing conditional generation as a monolithic autoregressive sequence task. Popularized by omni-directional architectures (such as GPT-4o or Chameleon), all conditioning modalities (text tokens, visual patch matrices, acoustic codebooks) are flattened into a single shared attention token sequence [INDEX: 1].
-    *   *Significance:* Conditioning behaves natively as a prefix complete-the-string logic block [INDEX: 1]. Passing text tokens ahead simply forces the unified transformer to complete the sequence using visual patch matrices or audio waves, optimizing cross-sensory synthesis cleanly without multi-model alignment lag [INDEX: 1].
+| Era | Concept | Significance / Limitation | Year | Paper |
+| :--- | :--- | :--- | :--- | :--- |
+| **The Categorical One-Hot Injection Era (Conditional GANs, ~2014–2017)** | The theoretical genesis popularized by Mirza and Osindero. Early **Conditional Generative Adversarial Networks (cGANs)** injected conditioning constraints by concatenating a discrete, hand-crafted **One-Hot Encoded Class Label Vector** directly onto input noise arrays. | Extremely narrow and discrete. The model could only generate objects belonging to a pre-defined list of fixed indices, failing to process natural language. | 2014 | [Conditional Generative Adversarial Nets](https://arxiv.org/abs/1411.1784) |
+| **The Latent Space Text-Conditioned Era (Stable Diffusion, ~2022–2024)** | Spurred by **CLIP** and **Latent Diffusion Models (LDMs)**. Replaced rigid label vectors with continuous natural language embedding arrays. Vectors injected via **Cross-Attention Mechanisms** [INDEX: 10]. | Unlocked open-vocabulary text-to-image and text-to-video foundation scaling, mapping arbitrary linguistic concepts to precise pixel distributions [INDEX: 10]. | 2022 | [High-Resolution Image Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2112.10752) |
+| **The Fine-Grained Spatial Structural Adapter Era (~2023–2025)** | Addressed structural ambiguity of text prompts. Introduced **ControlNet** and **IP-Adapter**, which clone base network's convolutional blocks to feed extra spatial conditioning layers into frozen backbones. | Allows specification of exact pixel boundaries or human postures efficiently, bridging the gap between descriptive text and spatial structure. | 2023 | [Adding Conditional Control to Text-to-Image Diffusion Models](https://arxiv.org/abs/2302.05543) |
+| **The Unified Omni Autoregressive Token Era (~2025–Present)** | Collapses separate conditional projection heads, framing conditional generation as a monolithic autoregressive sequence task (e.g., GPT-4o, Chameleon). Modalities flattened into a single sequence [INDEX: 1]. | Conditioning behaves natively as a prefix complete-the-string logic block [INDEX: 1], optimizing cross-sensory synthesis cleanly. | 2024 | [Chameleon: Mixed-Modal Early-Fusion Foundation Models](https://arxiv.org/abs/2405.09818) |
 
 ---
 
@@ -37,19 +32,12 @@ flowchart LR
 
 Conditional Generation models are strictly categorized based on the architectural mechanism deployed to pass the guiding signal into the hidden representation layers.
 
-- ### A. Concatenation-Based Conditioning
-	*   **Mechanism:** The most entry-level architectural framework. The conditioning signal (typically a categorical vector or a low-resolution feature map) is concatenated directly along the channel or sequence dimension of the latent noise tensor before it passes to the primary convolution or attention weights.
-
-- ### B. FiLM / Featurewise Linear Modulation (Adaptive Layer Scaling)
-	*   **Mechanism:** Implements an explicit conditioning bypass. A secondary network processes the conditioning signal ($c$), outputting distinct scaling scalars ($\gamma$) and shifting parameters ($\beta$). These parameters are used to modulate intermediate hidden feature maps ($x$) directly after layer normalization blocks:
-	    $$\text{FiLM}(x \mid c) = \gamma(c) \odot x + \beta(c)$$
-	*   **Application:** Standard building block inside modern text-to-speech audio wave networks and early conditional CNNs.
-
-- ### C. Cross-Attention Mask Conditioning
-	*   **Mechanism:** The default structural baseline used inside diffusion architectures. The latent features generate Queries ($Q$), while a pre-trained text encoder maps the conditioning string into Keys ($K$) and Values ($V$) [INDEX: 10]. Multi-head cross-attention blocks execute dot-product alignments, forcing the latent generation path to continuously conform to the textual prompt metrics.
-
-- ### D. Classifier-Free Guidance (CFG Trajectory Steering)
-	*   **Mechanism:** A runtime sampling modification that enforces prompt compliance [INDEX: 23]. During the generative loop, the model evaluates a conditional pass and an unconditioned null-token pass concurrently, multiplying the delta between them by a scale factor to push the latent vector along an explicit semantic trajectory [INDEX: 23].
+| Variant | Mechanism | Application / Detail | Year | Paper |
+| :--- | :--- | :--- | :--- | :--- |
+| **A. Concatenation-Based Conditioning** | The conditioning signal is concatenated directly along the channel or sequence dimension of the latent noise tensor before passing to primary convolution/attention weights. | The most entry-level architectural framework. | 2014 | [Conditional Generative Adversarial Nets](https://arxiv.org/abs/1411.1784) |
+| **B. FiLM / Featurewise Linear Modulation (Adaptive Layer Scaling)** | A secondary network processes conditioning signal ($c$) to output scaling ($\gamma$) and shifting ($\beta$) parameters. Modulates hidden feature maps ($x$): $\text{FiLM}(x \mid c) = \gamma(c) \odot x + \beta(c)$ | Standard building block inside modern text-to-speech audio wave networks and early conditional CNNs. | 2018 | [FiLM: Visual Reasoning with a Feature-Wise Linear Modulation](https://arxiv.org/abs/1709.07871) |
+| **C. Cross-Attention Mask Conditioning** | Latent features generate Queries ($Q$), text encoder maps string into Keys ($K$) and Values ($V$) [INDEX: 10]. Executes dot-product alignments to conform to prompt metrics. | The default structural baseline used inside diffusion architectures. | 2022 | [High-Resolution Image Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2112.10752) |
+| **D. Classifier-Free Guidance (CFG Trajectory Steering)** | Evaluates conditional pass and unconditioned null-token pass concurrently, multiplying delta by a scale factor to push latent vector along a semantic trajectory [INDEX: 23]. | A runtime sampling modification that enforces prompt compliance [INDEX: 23]. | 2021 | [Classifier-Free Diffusion Guidance](https://arxiv.org/abs/2207.12598) |
 
 ---
 
@@ -73,10 +61,10 @@ C --> G["Diffusion Transformer (DiT)<br/>or U-Net Denoiser"]
 F --> G
 ```
 
-*   **ControlNet Adapter Channels**
-    *   *Profile:* Fine-grained geometric layout control. It copies the structural parameters of a frozen foundation model, processing spatial arrays (like segmentation blocks or sketches) to inject a localized, low-level spatial coordinate bias straight into the generation pass, protecting composition boundaries perfectly.
-*   **Omni Tokenizer Patch Builders**
-    *   *Profile:* Collapses data-modality fragmentation. Transforms multi-sensory files (video clips, audio, strings) into standard token grids [INDEX: 1]. Conditioning is handled as a standard left-to-right causal masking sequence, allowing any token chunk to act as a mathematical condition for the next modality slice [INDEX: 1].
+| Component | Profile | Year | Paper |
+| :--- | :--- | :--- | :--- |
+| **ControlNet Adapter Channels** | Fine-grained geometric layout control. Copies structural parameters of a frozen foundation model, processing spatial arrays to inject a localized spatial bias, protecting composition boundaries. | 2023 | [Adding Conditional Control to Text-to-Image Diffusion Models](https://arxiv.org/abs/2302.05543) |
+| **Omni Tokenizer Patch Builders** | Collapses data-modality fragmentation. Transforms multi-sensory files into standard token grids [INDEX: 1]. Conditioning is handled as a standard left-to-right causal masking sequence [INDEX: 1]. | 2024 | [OmniTokenizer: A Joint Image-Video Tokenizer for Visual Generation](https://arxiv.org/abs/2406.08224) |
 
 ---
 
@@ -84,23 +72,20 @@ F --> G
 
 Deploying and scaling complex conditional generation loops across massive commercial cloud infrastructures introduces unique memory bus and computational bottlenecks.
 
-*   **The Double-FLOP Evaluation and Serving Latency Wall**
-    *   *The Problem:* Enforcing precise text conditioning via Classifier-Free Guidance (CFG) requires evaluating both the conditional prompt track and an unconditioned null track at every step of a generation pass, doubling total operational compute costs and slowing token delivery [INDEX: 23].
-    *   *Mitigation:* Implementing **Speculative CFG Skipping**, which calculates the unconditioned loop exclusively during the early 60% of composition steps, completely dropping the unconditioned math during terminal high-frequency detailing steps to cut inference compute by 30% without quality loss [INDEX: 23].
-*   **The Attention Sequence Cache Memory Crisis**
-    *   *The Problem:* In modern Diffusion Transformers (DiTs), concatenating massive conditioning text inputs (via deep T5 encoders) with ultra-long visual patch sequences explodes the internal self-attention matrix size, saturating GPU VRAM and triggering Out-of-Memory system crashes.
-    *   *Mitigation:* Compiling cross-attention conditioning blocks into highly optimized **fused FlashAttention kernels**, executing text-image vector alignments directly within fast, on-chip GPU SRAM registers to bypass global memory bus bottlenecks [INDEX: 23].
+| Challenge | Problem | Mitigation | Year | Paper |
+| :--- | :--- | :--- | :--- | :--- |
+| **The Double-FLOP Evaluation and Serving Latency Wall** | Enforcing precise text conditioning via CFG requires evaluating conditional and unconditioned tracks at every step, doubling compute costs [INDEX: 23]. | Implementing **Speculative CFG Skipping**, calculating the unconditioned loop exclusively during the early 60% of composition steps [INDEX: 23]. | 2021 | [Classifier-Free Diffusion Guidance](https://arxiv.org/abs/2207.12598) |
+| **The Attention Sequence Cache Memory Crisis** | Concatenating massive text inputs with ultra-long visual patch sequences explodes the self-attention matrix size in DiTs, saturating GPU VRAM. | Compiling cross-attention blocks into **fused FlashAttention kernels**, executing text-image alignments within fast GPU SRAM [INDEX: 23]. | 2022 | [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) |
 
 ---
 
 ## 5. Frontier Real-World AI Industrial Applications
 
-*   **Text-to-Image & Generative Graphic Production (Midjourney / FLUX.1)**
-    *   *Application:* Powers commercial asset platforms. Text-guided conditional generation transformers ingest abstract descriptive commands, utilizing high-scale CFG steering parameters to synthesize high-resolution creative marketing, branding typography, and digital art graphics natively [INDEX: 23].
-*   **Spatio-Temporal Video Synthesis and Cinematic Pre-Visualization**
-    *   *Application:* Drives next-generation automated cinema composition. Spatio-temporal diffusion transformers ingest multi-modal conditioning constraints (combining a textual narrative description with a structural starting image), generating fluid, physically consistent, and chronologically stable multi-second video animations cleanly.
-*   **De Novo Bio-Informatics Molecular Target Optimization**
-    *   *Application:* Accelerates target-specific drug discovery and structural biology research (AlphaFold 3 / RFdiffusion). Equivariant conditional diffusion networks treat atomic locations as data clouds; the system conditions generation on target chemical binding criteria, synthesizing completely novel protein structures that satisfy explicit biochemical matching boundaries perfectly.
+| Application | Details | Year | Paper |
+| :--- | :--- | :--- | :--- |
+| **Text-to-Image & Generative Graphic Production (Midjourney / FLUX.1)** | Powers commercial asset platforms. Transformers ingest descriptive commands, using CFG to synthesize high-resolution marketing and digital art natively [INDEX: 23]. | 2024 | [FLUX.1: Flow-matching scaling laws over conditioned transformer token arrays](https://blackforestlabs.ai/) |
+| **Spatio-Temporal Video Synthesis and Cinematic Pre-Visualization** | Drives automated cinema composition. Spatio-temporal diffusion transformers ingest multi-modal constraints to generate fluid, consistent multi-second video animations. | 2024 | [Video generation models as world simulators](https://openai.com/research/video-generation-models-as-world-simulators) |
+| **De Novo Bio-Informatics Molecular Target Optimization** | Accelerates drug discovery (AlphaFold 3 / RFdiffusion). Equivariant diffusion networks condition generation on chemical binding criteria, synthesizing novel protein structures. | 2023 | [De novo design of protein structure and function with RFdiffusion](https://www.nature.com/articles/s41586-023-06415-8) |
 
 ---
 
