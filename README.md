@@ -124,3 +124,14 @@ Before updating this documentation repository layout, let me know how you would 
 * I can generate a **Markdown matrix table** tracking the specific network dimensions, text encoders, and latent channel counts used by leading enterprise repositories to execute high-fidelity conditional token generation.
 * I can write a detailed technical explanation focusing on the **mathematics of Classifier-Free Guidance scale modulation** and how it steers probability density curves during inference [INDEX: 23].
 
+
+## ⭐ Star History
+<div align="center">
+<a href="https://www.star-history.com/?repos=ishandutta2007%2FAwesome-Conditional-Generation&type=date&legend=bottom-right">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=ishandutta2007/Awesome-Conditional-Generation&type=date&theme=dark&legend=bottom-right" />
+<source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=ishandutta2007/Awesome-Conditional-Generation&type=date&legend=bottom-right" />
+<img alt="Star History Chart" src="https://api.star-history.com/chart?repos=ishandutta2007/Awesome-Conditional-Generation&type=date&legend=bottom-right" />
+</picture>
+</a>
+</div>
