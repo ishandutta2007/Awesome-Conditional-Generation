@@ -37,19 +37,19 @@ flowchart LR
 
 Conditional Generation models are strictly categorized based on the architectural mechanism deployed to pass the guiding signal into the hidden representation layers.
 
-### A. Concatenation-Based Conditioning
-*   **Mechanism:** The most entry-level architectural framework. The conditioning signal (typically a categorical vector or a low-resolution feature map) is concatenated directly along the channel or sequence dimension of the latent noise tensor before it passes to the primary convolution or attention weights.
+- ### A. Concatenation-Based Conditioning
+	*   **Mechanism:** The most entry-level architectural framework. The conditioning signal (typically a categorical vector or a low-resolution feature map) is concatenated directly along the channel or sequence dimension of the latent noise tensor before it passes to the primary convolution or attention weights.
 
-### B. FiLM / Featurewise Linear Modulation (Adaptive Layer Scaling)
-*   **Mechanism:** Implements an explicit conditioning bypass. A secondary network processes the conditioning signal ($c$), outputting distinct scaling scalars ($\gamma$) and shifting parameters ($\beta$). These parameters are used to modulate intermediate hidden feature maps ($x$) directly after layer normalization blocks:
-    $$\text{FiLM}(x \mid c) = \gamma(c) \odot x + \beta(c)$$
-*   **Application:** Standard building block inside modern text-to-speech audio wave networks and early conditional CNNs.
+- ### B. FiLM / Featurewise Linear Modulation (Adaptive Layer Scaling)
+	*   **Mechanism:** Implements an explicit conditioning bypass. A secondary network processes the conditioning signal ($c$), outputting distinct scaling scalars ($\gamma$) and shifting parameters ($\beta$). These parameters are used to modulate intermediate hidden feature maps ($x$) directly after layer normalization blocks:
+	    $$\text{FiLM}(x \mid c) = \gamma(c) \odot x + \beta(c)$$
+	*   **Application:** Standard building block inside modern text-to-speech audio wave networks and early conditional CNNs.
 
-### C. Cross-Attention Mask Conditioning
-*   **Mechanism:** The default structural baseline used inside diffusion architectures. The latent features generate Queries ($Q$), while a pre-trained text encoder maps the conditioning string into Keys ($K$) and Values ($V$) [INDEX: 10]. Multi-head cross-attention blocks execute dot-product alignments, forcing the latent generation path to continuously conform to the textual prompt metrics.
+- ### C. Cross-Attention Mask Conditioning
+	*   **Mechanism:** The default structural baseline used inside diffusion architectures. The latent features generate Queries ($Q$), while a pre-trained text encoder maps the conditioning string into Keys ($K$) and Values ($V$) [INDEX: 10]. Multi-head cross-attention blocks execute dot-product alignments, forcing the latent generation path to continuously conform to the textual prompt metrics.
 
-### D. Classifier-Free Guidance (CFG Trajectory Steering)
-*   **Mechanism:** A runtime sampling modification that enforces prompt compliance [INDEX: 23]. During the generative loop, the model evaluates a conditional pass and an unconditioned null-token pass concurrently, multiplying the delta between them by a scale factor to push the latent vector along an explicit semantic trajectory [INDEX: 23].
+- ### D. Classifier-Free Guidance (CFG Trajectory Steering)
+	*   **Mechanism:** A runtime sampling modification that enforces prompt compliance [INDEX: 23]. During the generative loop, the model evaluates a conditional pass and an unconditioned null-token pass concurrently, multiplying the delta between them by a scale factor to push the latent vector along an explicit semantic trajectory [INDEX: 23].
 
 ---
 
