@@ -4,6 +4,7 @@
 
 <p align="center">
   A curated list of awesome conditional generation frameworks, papers, models, and tools.
+<a href="https://github.com/ishandutta2007"><img alt="GitHub followers" src="https://img.shields.io/github/followers/ishandutta2007?label=Follow" /></a>
 </p>
 <p align="center">
 
